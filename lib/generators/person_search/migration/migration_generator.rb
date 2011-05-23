@@ -1,5 +1,5 @@
-require 'rails/generators'
 require 'rails/generators/migration'
+require 'rails/generators/active_record'
 
 module PersonSearch
 	class MigrationGenerator < Rails::Generators::Base
@@ -12,7 +12,7 @@ module PersonSearch
 		end
 
 		def self.next_migration_number(dirname)
-			Time.now.utc.strftime('%Y%m%d%H%M%S')
+			ActiveRecord::Generators::Base.next_migration_number(dirname)
 		end
 
 		def create_migration_file
