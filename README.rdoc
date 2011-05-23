@@ -1,0 +1,3 @@
+= PersonSearch
+
+Search for people based upon their full names while taking into consideration nick names and word ordering.
