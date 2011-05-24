@@ -7,8 +7,7 @@ rescue LoadError
 end
 
 require 'rake'
-require 'rake/rdoctask'
-
+require 'rdoc/task'
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
@@ -20,7 +19,7 @@ end
 
 task :default => :test
 
-Rake::RDocTask.new(:rdoc) do |rdoc|
+RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'PersonSearch'
   rdoc.options << '--line-numbers' << '--inline-source'
