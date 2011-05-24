@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class NameTest < ActiveSupport::TestCase
+	def name
+		@@name ||= PersonSearch::Name.new
+	end
+
 	test 'class exists' do
 		assert defined? PersonSearch::Name
 	end
@@ -11,11 +15,11 @@ class NameTest < ActiveSupport::TestCase
   end
 
 	test 'responds_to text' do
-		assert PersonSearch::Name.new.respond_to? :text
+		assert name.respond_to? :text
 	end
 
 	test 'belongs_to name_relationship' do
-		assert PersonSearch::Name.new.respond_to? :name_relationship
+		assert name.respond_to? :name_relationship
 	end
 
 	test 'can add name_relationship' do
