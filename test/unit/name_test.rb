@@ -2,7 +2,7 @@ require 'test_helper'
 
 class NameTest < ActiveSupport::TestCase
 	def name
-		@@name ||= PersonSearch::Name.new
+		@@name ||= Factory.build :name
 	end
 
 	test 'class exists' do

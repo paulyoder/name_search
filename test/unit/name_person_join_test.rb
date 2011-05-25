@@ -2,7 +2,7 @@ require 'test_helper'
 
 class NamePersonJoinTest < ActiveSupport::TestCase
 	def join
-		@@join ||= PersonSearch::NamePersonJoin.new
+		@@join ||= Factory.build :name_person_join
 	end
 
 	test 'class exists' do
@@ -27,14 +27,21 @@ class NamePersonJoinTest < ActiveSupport::TestCase
 	end
 
 	test 'requires name' do
-
+		requires join, :name
 	end
 
 	test 'requires person_id' do
-
+		requires join, :person_id
 	end
 
 	test 'requires person_klass' do
+		requires join, :person_klass
+	end
 
+	def requires(object, attribute)
+		orig_val = object.send(attribute.to_s)
+		object.send("#{attribute.to_s}=", nil)
+		assert_equal false, object.valid?
+		object.send("#{attribute.to_s}=", orig_val)
 	end
 end
