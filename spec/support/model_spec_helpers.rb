@@ -26,4 +26,13 @@ module ModelSpecHelpers
 			end
 		end
 	end
+
+	def model_has_unique_attributes(*attributes)
+		attributes.each do |attribute|
+			it "#{attribute.to_s} attribute should be unique" do
+				model.class._validators.should have_key(attribute)
+				model.class._validators[attribute].any?{|x| x.class == ActiveRecord::Validations::UniquenessValidator}.should be_true
+			end
+		end
+	end
 end

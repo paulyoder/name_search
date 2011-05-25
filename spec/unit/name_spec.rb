@@ -13,4 +13,6 @@ describe PersonSearch::Name do
 
 	model_responds_to :text,
 									  :name_relationship
+	
+	model_has_unique_attributes :text
 end
