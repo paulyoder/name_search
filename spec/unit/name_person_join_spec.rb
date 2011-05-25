@@ -11,11 +11,11 @@ describe PersonSearch::NamePersonJoin do
 
 	let(:model) { Factory.build :name_person_join }
 
-	model_should_respond_to :name,
-													:person_id,
-													:person_klass
+	model_responds_to :name,
+										:person_id,
+										:person_klass
 
-	model_should_require :name,
-											 :person_id,
-											 :person_klass
+	model_requires :name,
+								 :person_id,
+								 :person_klass
 end

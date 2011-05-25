@@ -11,14 +11,6 @@ describe PersonSearch::Name do
 
 	let(:model) { Factory.build :name }
 
-	model_should_respond_to :text,
-													:name_relationship
-
-	it 'can add a name_relationship' do
-		name = PersonSearch::Name.new
-		relationship = PersonSearch::NameRelationship.create
-		name.name_relationship = relationship
-
-		name.save.should be_true
-	end
+	model_responds_to :text,
+									  :name_relationship
 end

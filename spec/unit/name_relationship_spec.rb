@@ -11,5 +11,5 @@ describe PersonSearch::NameRelationship do
 
 	let(:model) { PersonSearch::NameRelationship.new }
 
-	model_should_respond_to :names
+	model_responds_to :names
 end
