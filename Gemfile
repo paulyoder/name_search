@@ -9,5 +9,6 @@ group :development, :test do
 end
 
 group :test do
-	'ruby-debug19'
+	gem 'rspec-rails', '>= 2.0.0.beta'
+	gem 'ruby-debug19'
 end

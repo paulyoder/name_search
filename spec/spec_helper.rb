@@ -1,15 +1,10 @@
 # Configure Rails Envinronment
-ENV["RAILS_ENV"] = 'test'
+ENV['RAILS_ENV'] = 'test'
 
 require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rails/test_help'
+require 'rspec/rails'
 require 'factory_girl'
-
-Factory.definition_file_paths = [
-	File.expand_path('test/factories')
-]
-Factory.find_definitions
-
 
 ActionMailer::Base.delivery_method = :test
 ActionMailer::Base.perform_deliveries = true
@@ -27,3 +22,15 @@ ActiveRecord::Migrator.migrate File.expand_path('../dummy/db/migrate/', __FILE__
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+RSpec.configure do |config|
+  require 'rspec/expectations'
+  config.include RSpec::Matchers
+  config.mock_with :rspec
+	config.extend ModelSpecHelpers
+end
+
+Factory.definition_file_paths = [
+	File.expand_path('spec/factories')
+]
+Factory.find_definitions
