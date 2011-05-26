@@ -12,7 +12,9 @@ describe PersonSearch::Name do
 	let(:model) { Factory.build :name }
 
 	model_responds_to :value,
-									  :nick_name_family
+									  :nick_name_family,
+										:nick_names,
+										:nick_name_values
 	
 	model_has_unique_attributes :value
 
@@ -23,9 +25,28 @@ describe PersonSearch::Name do
 		name.value.should == 'paul'
 	end
 
+	describe '#nick_names' do
+		it 'returns values for names in same NickNameFamily' do
+			PersonSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
+			find_name('andy').nick_names.map(&:value).should include('andrew','andy','drew')
+		end
+	end
+
+	describe '#nick_name_values' do
+		it 'returns the values for names in the same NickNameFamily' do
+			PersonSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
+			find_name('andrew').nick_name_values.should include('andrew','andy','drew')
+		end
+		it 'returns empty array if no nick names' do
+			delete_names
+			PersonSearch::Name.create! :value => 'paul'
+			find_name('paul').nick_name_values.length.should == 0
+		end
+	end
+
 	describe '.find' do
 		before :all do
-			PersonSearch::Name.delete_all
+			delete_names
 			@name = PersonSearch::Name.create! :value => 'joe'
 		end
 		context 'when an integer argument is used' do
@@ -43,7 +64,7 @@ describe PersonSearch::Name do
 	describe '.relate_nick_names' do
 		context 'when none of the names are in the database' do
 			before :all do
-				PersonSearch::Name.delete_all
+				delete_names
 				PersonSearch::Name.relate_nick_names('Sue', 'Suzie', 'Susan')
 			end
 				
@@ -67,7 +88,7 @@ describe PersonSearch::Name do
 
 		context 'when some names are already in the database' do
 			before :all do
-				PersonSearch::Name.delete_all
+				delete_names
 				Factory :name, :value => 'joe'
 				PersonSearch::Name.relate_nick_names('joseph', 'joey', 'joe')
 			end
@@ -86,7 +107,7 @@ describe PersonSearch::Name do
 
 		context 'when a name already has a nick_name_family' do
 			before :all do
-				PersonSearch::Name.delete_all
+				delete_names
 				@family = Factory :nick_name_family
 				Factory :name, :value => 'Joe', :nick_name_family => @family
 				PersonSearch::Name.relate_nick_names('Joseph', 'Joey', 'Joe')
@@ -106,5 +127,9 @@ describe PersonSearch::Name do
 
 	def find_name(name_or_id)
 		PersonSearch::Name.find(name_or_id)
+	end
+
+	def delete_names()
+		PersonSearch::Name.delete_all
 	end
 end

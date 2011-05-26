@@ -5,6 +5,11 @@ module PersonSearch
 
 		belongs_to :nick_name_family, :class_name => 'PersonSearch::NickNameFamily'
 
+		has_many :nick_names, :through => :nick_name_family, :source => :names
+		def nick_name_values()
+			nick_names.map(&:value)
+		end
+
 		validates :value, :uniqueness => true
 
 		def self.relate_nick_names(*names)
