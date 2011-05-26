@@ -1,8 +1,8 @@
 Factory.define :name, :class => PersonSearch::Name do |t|  
-  t.text { Factory.next(:unique_name) }
+  t.value { Factory.next(:unique_name) }
 end
 
-Factory.define :name_relationship, :class => PersonSearch::NameRelationship do |t|
+Factory.define :name_family, :class => PersonSearch::NameFamily do |t|
 end
 
 Factory.define :name_person_join, :class => PersonSearch::NamePersonJoin do |t|
