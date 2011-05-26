@@ -10,10 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110525220128) do
-
-  create_table "person_search_name_families", :force => true do |t|
-  end
+ActiveRecord::Schema.define(:version => 20110526015854) do
 
   create_table "person_search_name_person_joins", :force => true do |t|
     t.integer "name_id"
@@ -26,10 +23,13 @@ ActiveRecord::Schema.define(:version => 20110525220128) do
 
   create_table "person_search_names", :force => true do |t|
     t.string  "value"
-    t.integer "family_id"
+    t.integer "nick_name_family_id"
   end
 
-  add_index "person_search_names", ["family_id"], :name => "index_person_search_names_on_family_id"
+  add_index "person_search_names", ["nick_name_family_id"], :name => "index_person_search_names_on_nick_name_family_id"
   add_index "person_search_names", ["value"], :name => "index_person_search_names_on_value"
+
+  create_table "person_search_nick_name_families", :force => true do |t|
+  end
 
 end

@@ -2,12 +2,12 @@ class CreatePersonSearchTables < ActiveRecord::Migration
   def self.up
     create_table :person_search_names do |t|
       t.string  :value
-      t.integer :family_id
+      t.integer :nick_name_family_id
     end
     add_index :person_search_names, :value
-    add_index :person_search_names, :family_id
+    add_index :person_search_names, :nick_name_family_id
      
-    create_table :person_search_name_families do |t|
+    create_table :person_search_nick_name_families do |t|
     end
 
     create_table :person_search_name_person_joins do |t|
@@ -21,7 +21,7 @@ class CreatePersonSearchTables < ActiveRecord::Migration
 
   def self.down
     drop_table :person_search_names
-    drop_table :person_search_name_families
+    drop_table :person_search_nick_name_families
     drop_table :person_search_name_person_joins
   end
 end

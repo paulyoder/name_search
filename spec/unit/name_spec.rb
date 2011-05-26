@@ -12,7 +12,7 @@ describe PersonSearch::Name do
 	let(:model) { Factory.build :name }
 
 	model_responds_to :value,
-									  :family
+									  :nick_name_family
 	
 	model_has_unique_attributes :value
 
@@ -29,8 +29,8 @@ describe PersonSearch::Name do
 			end
 
 			it 'both names have the same family' do
-				sue_relationship_id = PersonSearch::Name.where(:value => 'Sue').first.try(:family_id)
-				suzie_relationship_id = PersonSearch::Name.where(:value => 'Suzie').first.try(:family_id)
+				sue_relationship_id = PersonSearch::Name.where(:value => 'Sue').first.try(:nick_name_family_id)
+				suzie_relationship_id = PersonSearch::Name.where(:value => 'Suzie').first.try(:nick_name_family_id)
 				sue_relationship_id.should_not be_nil
 				suzie_relationship_id.should_not be_nil
 				sue_relationship_id.should == suzie_relationship_id
