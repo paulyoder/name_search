@@ -10,16 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110526015854) do
+ActiveRecord::Schema.define(:version => 20110527114643) do
 
-  create_table "person_search_name_person_joins", :force => true do |t|
-    t.integer "name_id"
-    t.integer "person_id"
-    t.string  "person_klass"
+  create_table "customers", :force => true do |t|
+    t.string "name"
+    t.string "state"
+    t.string "zip"
   end
 
-  add_index "person_search_name_person_joins", ["name_id"], :name => "index_person_search_name_person_joins_on_name_id"
-  add_index "person_search_name_person_joins", ["person_id", "person_klass"], :name => "index_person_search_person_id_person_klass"
+  create_table "person_search_name_searchables", :force => true do |t|
+    t.integer "name_id"
+    t.integer "searchable_id"
+    t.string  "searchable_type"
+  end
+
+  add_index "person_search_name_searchables", ["name_id"], :name => "index_person_search_name_searchables_on_name_id"
+  add_index "person_search_name_searchables", ["searchable_id", "searchable_type"], :name => "index_person_search_searchable"
 
   create_table "person_search_names", :force => true do |t|
     t.string  "value"

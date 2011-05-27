@@ -10,18 +10,20 @@ class CreatePersonSearchTables < ActiveRecord::Migration
     create_table :person_search_nick_name_families do |t|
     end
 
-    create_table :person_search_name_person_joins do |t|
+    create_table :person_search_name_searchables do |t|
       t.integer :name_id
-      t.integer :person_id
-      t.string :person_klass
+      t.integer :searchable_id
+			t.string	:searchable_type
     end
-    add_index :person_search_name_person_joins, :name_id
-    add_index :person_search_name_person_joins, [:person_id, :person_klass], :name => 'index_person_search_person_id_person_klass'
+    add_index :person_search_name_searchables, :name_id
+    add_index :person_search_name_searchables,
+			[:searchable_id, :searchable_type],
+			:name => 'index_person_search_searchable'
   end
 
   def self.down
     drop_table :person_search_names
     drop_table :person_search_nick_name_families
-    drop_table :person_search_name_person_joins
+    drop_table :person_search_name_searchables
   end
 end

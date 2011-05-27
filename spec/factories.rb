@@ -5,7 +5,7 @@ end
 Factory.define :nick_name_family, :class => PersonSearch::NickNameFamily do |t|
 end
 
-Factory.define :name_person_join, :class => PersonSearch::NamePersonJoin do |t|
+Factory.define :name_searchable, :class => PersonSearch::NameSearchable do |t|
 	t.association :name
 end
 
