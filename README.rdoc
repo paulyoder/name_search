@@ -1,3 +1,3 @@
-= PersonSearch
+= Name Search
 
-Search for people based upon their full names while taking into consideration nick names and word ordering.
+Search for names while taking into consideration nick names and word ordering.
