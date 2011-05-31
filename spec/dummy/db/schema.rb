@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110527114643) do
+ActiveRecord::Schema.define(:version => 20110531113132) do
 
   create_table "customers", :force => true do |t|
     t.string "name"
@@ -18,24 +18,24 @@ ActiveRecord::Schema.define(:version => 20110527114643) do
     t.string "zip"
   end
 
-  create_table "person_search_name_searchables", :force => true do |t|
+  create_table "name_search_names", :force => true do |t|
+    t.string  "value"
+    t.integer "nick_name_family_id"
+  end
+
+  add_index "name_search_names", ["nick_name_family_id"], :name => "index_name_search_names_on_nick_name_family_id"
+  add_index "name_search_names", ["value"], :name => "index_name_search_names_on_value"
+
+  create_table "name_search_nick_name_families", :force => true do |t|
+  end
+
+  create_table "name_search_searchables", :force => true do |t|
     t.integer "name_id"
     t.integer "searchable_id"
     t.string  "searchable_type"
   end
 
-  add_index "person_search_name_searchables", ["name_id"], :name => "index_person_search_name_searchables_on_name_id"
-  add_index "person_search_name_searchables", ["searchable_id", "searchable_type"], :name => "index_person_search_searchable"
-
-  create_table "person_search_names", :force => true do |t|
-    t.string  "value"
-    t.integer "nick_name_family_id"
-  end
-
-  add_index "person_search_names", ["nick_name_family_id"], :name => "index_person_search_names_on_nick_name_family_id"
-  add_index "person_search_names", ["value"], :name => "index_person_search_names_on_value"
-
-  create_table "person_search_nick_name_families", :force => true do |t|
-  end
+  add_index "name_search_searchables", ["name_id"], :name => "index_name_search_searchables_on_name_id"
+  add_index "name_search_searchables", ["searchable_id", "searchable_type"], :name => "index_name_search_searchable"
 
 end

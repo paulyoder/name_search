@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe PersonSearch do
+describe NameSearch do
   it 'should be valid' do
-    PersonSearch.should be_a(Module)
+    NameSearch.should be_a(Module)
   end
 end

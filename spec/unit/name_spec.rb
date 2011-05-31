@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe PersonSearch::Name do
+describe NameSearch::Name do
 	it 'should exist' do
-		defined?(PersonSearch::Name).should be_true
+		defined?(NameSearch::Name).should be_true
 	end
 
-	specify 'table name should be person_search_names' do
-		PersonSearch::Name.table_name.should == 'person_search_names'
+	specify 'table name should be name_search_names' do
+		NameSearch::Name.table_name.should == 'name_search_names'
 	end
 
 	let(:model) { Factory.build :name }
@@ -19,7 +19,7 @@ describe PersonSearch::Name do
 	model_has_unique_attributes :value
 
 	it 'always saves name values in downcase' do
-		PersonSearch::Name.delete_all
+		NameSearch::Name.delete_all
 		name = Factory :name, :value => 'Paul'
 		name.reload
 		name.value.should == 'paul'
@@ -27,19 +27,19 @@ describe PersonSearch::Name do
 
 	describe '#nick_names' do
 		it 'returns values for names in same NickNameFamily' do
-			PersonSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
+			NameSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
 			find_name('andy').nick_names.map(&:value).should include('andrew','andy','drew')
 		end
 	end
 
 	describe '#nick_name_values' do
 		it 'returns the values for names in the same NickNameFamily' do
-			PersonSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
+			NameSearch::Name.relate_nick_names('andrew', 'andy', 'drew')
 			find_name('andrew').nick_name_values.should include('andrew','andy','drew')
 		end
 		it 'returns empty array if no nick names' do
 			delete_names
-			PersonSearch::Name.create! :value => 'paul'
+			NameSearch::Name.create! :value => 'paul'
 			find_name('paul').nick_name_values.length.should == 0
 		end
 	end
@@ -47,7 +47,7 @@ describe PersonSearch::Name do
 	describe '.find' do
 		before :all do
 			delete_names
-			@name = PersonSearch::Name.create! :value => 'joe'
+			@name = NameSearch::Name.create! :value => 'joe'
 		end
 		context 'when an integer argument is used' do
 			it 'returns name with same id' do
@@ -65,7 +65,7 @@ describe PersonSearch::Name do
 		context 'when none of the names are in the database' do
 			before :all do
 				delete_names
-				PersonSearch::Name.relate_nick_names('Sue', 'Suzie', 'Susan')
+				NameSearch::Name.relate_nick_names('Sue', 'Suzie', 'Susan')
 			end
 				
 			it 'adds all names to the database' do
@@ -90,7 +90,7 @@ describe PersonSearch::Name do
 			before :all do
 				delete_names
 				Factory :name, :value => 'joe'
-				PersonSearch::Name.relate_nick_names('joseph', 'joey', 'joe')
+				NameSearch::Name.relate_nick_names('joseph', 'joey', 'joe')
 			end
 
 			it 'adds the other names to the database' do
@@ -110,7 +110,7 @@ describe PersonSearch::Name do
 				delete_names
 				@family = Factory :nick_name_family
 				Factory :name, :value => 'Joe', :nick_name_family => @family
-				PersonSearch::Name.relate_nick_names('Joseph', 'Joey', 'Joe')
+				NameSearch::Name.relate_nick_names('Joseph', 'Joey', 'Joe')
 			end
 
 			it 'finds the nick_name_family even if argument name is not downcased' do
@@ -126,10 +126,10 @@ describe PersonSearch::Name do
 	end
 
 	def find_name(name_or_id)
-		PersonSearch::Name.find(name_or_id)
+		NameSearch::Name.find(name_or_id)
 	end
 
 	def delete_names()
-		PersonSearch::Name.delete_all
+		NameSearch::Name.delete_all
 	end
 end

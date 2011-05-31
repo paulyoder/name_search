@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe PersonSearch::SearchableConcerns do
+describe NameSearch::SearchableConcerns do
 	it 'adds full_name_search_on to ActiveRecord::Base class methods' do
-		ActiveRecord::Base.should respond_to :full_name_search_on
+		ActiveRecord::Base.should respond_to :name_search_on
 	end
 
-	describe 'full_name_search_on' do
+	describe 'name_search_on' do
 
 		describe 'name_searchables' do
 			it 'adds a polymorphic association to name_searchables' do
@@ -17,7 +17,7 @@ describe PersonSearch::SearchableConcerns do
 				customer = Customer.create!
 				searchable = customer.name_searchables.create! :name => name
 				customer.destroy
-				PersonSearch::NameSearchable.where(:id => searchable.id).count.should == 0
+				NameSearch::Searchable.where(:id => searchable.id).count.should == 0
 			end
 		end
 
@@ -29,12 +29,12 @@ describe PersonSearch::SearchableConcerns do
 				length.should == 1
 		end
 
-		it 'adds person_search_on class instance variable' do
-			Customer.should respond_to :person_search_on
+		it 'adds name_search_attributes class instance variable' do
+			Customer.should respond_to :name_search_attributes
 		end
 
-		it 'sets person_search_on value to the attribute argument' do
-			Customer.person_search_on.should == :name
+		it 'sets name_search_attributes value to the attribute argument' do
+			Customer.name_search_attributes.should == :name
 		end
 	end
 

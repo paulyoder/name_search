@@ -1,7 +1,7 @@
 require 'rails/generators/migration'
 require 'rails/generators/active_record'
 
-module PersonSearch
+module NameSearch
 	class MigrationGenerator < Rails::Generators::Base
 		include Rails::Generators::Migration
 
@@ -16,7 +16,7 @@ module PersonSearch
 		end
 
 		def create_migration_file
-			migration_template 'migration.rb', 'db/migrate/create_person_search_tables.rb'
+			migration_template 'migration.rb', 'db/migrate/create_name_search_tables.rb'
 		end
 	end
 end

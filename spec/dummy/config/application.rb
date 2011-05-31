@@ -7,7 +7,7 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
-require "person_search"
+require "name_search"
 
 module Dummy
   class Application < Rails::Application

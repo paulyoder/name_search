@@ -1,9 +1,9 @@
-module PersonSearch
+module NameSearch
 	class Name < ActiveRecord::Base
-		set_table_name :person_search_names
+		set_table_name :name_search_names
 		before_create :downcase_value
 
-		belongs_to :nick_name_family, :class_name => 'PersonSearch::NickNameFamily'
+		belongs_to :nick_name_family, :class_name => 'NameSearch::NickNameFamily'
 
 		has_many :nick_names, :through => :nick_name_family, :source => :names
 		def nick_name_values()

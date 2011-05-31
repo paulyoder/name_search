@@ -1,7 +1,7 @@
-require 'person_search'
+require 'name_search'
 require 'rails'
 
-module PersonSearch
+module NameSearch
 	class Railtie < Rails::Railtie
 	end
 end

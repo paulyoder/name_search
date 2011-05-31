@@ -1,6 +1,6 @@
-module PersonSearch
-	class NameSearchable < ActiveRecord::Base
-		set_table_name :person_search_name_searchables
+module NameSearch
+	class Searchable < ActiveRecord::Base
+		set_table_name :name_search_searchables
 
 		belongs_to :name
 		belongs_to :searchable, :polymorphic => true

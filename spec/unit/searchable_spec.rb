@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe PersonSearch::NameSearchable do
+describe NameSearch::Searchable do
 	it 'should exist' do
-		defined?(PersonSearch::NameSearchable).should be_true
+		defined?(NameSearch::Searchable).should be_true
 	end
 
 	specify 'table name should be person_search_name_searchables' do
-		PersonSearch::NameSearchable.table_name.should == 'person_search_name_searchables'
+		NameSearch::Searchable.table_name.should == 'name_search_searchables'
 	end
 
 	let(:model) { Factory.build :name_searchable }
