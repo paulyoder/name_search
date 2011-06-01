@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110531113132) do
+ActiveRecord::Schema.define(:version => 20110601112039) do
 
   create_table "customers", :force => true do |t|
     t.string "name"
@@ -37,5 +37,12 @@ ActiveRecord::Schema.define(:version => 20110531113132) do
 
   add_index "name_search_searchables", ["name_id"], :name => "index_name_search_searchables_on_name_id"
   add_index "name_search_searchables", ["searchable_id", "searchable_type"], :name => "index_name_search_searchable"
+
+  create_table "users", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
