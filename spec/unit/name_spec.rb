@@ -44,6 +44,20 @@ describe NameSearch::Name do
 		end
 	end
 
+	describe '.excluded_values' do
+		context 'includes' do
+			it 'and' do
+				NameSearch::Name.excluded_values.should include 'and'
+			end
+			it '&' do
+				NameSearch::Name.excluded_values.should include '&'
+			end
+			it 'or' do
+				NameSearch::Name.excluded_values.should include 'or'
+			end
+		end
+	end
+
 	describe '.find' do
 		before :all do
 			delete_names

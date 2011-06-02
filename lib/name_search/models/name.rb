@@ -12,6 +12,9 @@ module NameSearch
 
 		validates :value, :uniqueness => true
 
+		cattr_accessor :excluded_values
+		@@excluded_values = %w( and & or )
+
 		def self.relate_nick_names(*names)
 			family = get_family_for_nick_names(names)
 			names.each do |name|

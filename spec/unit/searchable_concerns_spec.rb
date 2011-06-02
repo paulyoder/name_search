@@ -21,12 +21,32 @@ describe NameSearch::SearchableConcerns do
 			end
 		end
 
-		it 'adds a after_save filter on the attribute' do
-			Customer._save_callbacks.
-				select{|x| x.kind == :after && 
-									 x.filter == :sync_name_values &&
-									 x.options[:if].first == :name_changed?}.
-				length.should == 1
+		describe 'name_searchable_values' do
+			it 'maps name_searchbles.name.value' do
+				c = Customer.create! :name => 'Paul Yoder'
+				c.name_searchable_values.should include('paul', 'yoder')
+			end
+		end
+
+		context 'after_save callback' do
+			it 'calls sync_name_values method' do
+				Customer._save_callbacks.
+					select{|x| x.kind == :after && 
+										 x.filter == :sync_name_values}.
+					length.should == 1
+			end
+
+			it 'gets called if the single attribute changes' do
+				c = Customer.create! :name => 'Paul'
+				c.name_searchables.length.should == 1
+			end
+			
+			it 'gets called if the last of multiple attributes changes' do
+				u = User.create! :first_name => 'Paul', :last_name => 'Yoder'
+				u.last_name = 'Smith'
+				u.save!
+				u.name_searchables(true).map{|x| x.name.value}.should include('smith')
+			end
 		end
 
 		it 'adds name_search_attributes class instance variable' do
@@ -44,8 +64,8 @@ describe NameSearch::SearchableConcerns do
 			@customer = Customer.create! :name => name
 		end
 
-		def customer_name_values()
-			@customer.name_searchables(true).map{|x| x.name.value }
+		def customer_name_values(force_reload = false)
+			@customer.name_searchables(force_reload).map{|x| x.name.value }
 		end
 
 		specify 'first name' do
@@ -104,6 +124,20 @@ describe NameSearch::SearchableConcerns do
 			it 'saves name values on each attribute' do
 				user = User.create! :first_name => 'Paul', :last_name => 'Yoder'
 				user.name_searchables(true).map{|x| x.name.value }.should include('paul', 'yoder')
+			end
+		end
+		context 'when name changes' do
+			it 'does not re-add name values that did not change' do
+				new_customer('Jen York')
+				@customer.name = 'Jen Yoder'
+				@customer.save!
+				customer_name_values.count('jen').should == 1
+			end
+			it 'deletes name values that no longer exist' do
+				new_customer('Jen York')
+				@customer.name = 'Jen Yoder'
+				@customer.save!
+				customer_name_values(true).should_not include('york')
 			end
 		end
 	end
