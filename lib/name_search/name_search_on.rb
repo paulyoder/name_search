@@ -7,7 +7,7 @@ module NameSearch
 			class_eval do
 				include NameSearchablesConcerns
 
-				after_save :sync_name_values
+				after_save :sync_name_searchables
 				has_many :name_searchables, :as => :searchable, :dependent => :destroy,
 					:include => :name, :class_name => 'NameSearch::Searchable'
 				

@@ -29,10 +29,10 @@ describe NameSearch::NameSearchOn do
 		end
 
 		context 'after_save callback' do
-			it 'calls sync_name_values method' do
+			it 'calls sync_name_searchables method' do
 				Customer._save_callbacks.
 					select{|x| x.kind == :after && 
-										 x.filter == :sync_name_values}.
+										 x.filter == :sync_name_searchables}.
 					length.should == 1
 			end
 

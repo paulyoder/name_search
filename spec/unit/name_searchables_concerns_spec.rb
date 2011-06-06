@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe NameSearch::NameSearchablesConcerns do
-	describe 'sync_name_values' do
+	describe 'sync_name_searchables' do
 		def new_customer(name)
 			@customer = Customer.create! :name => name
 		end
