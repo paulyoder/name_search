@@ -19,9 +19,8 @@ module NameSearch
 		end
 
 		def create_new_name_searchables(names)
-			names.uniq.each do |name|
-				next if NameSearch::Name.excluded_values.include?(name)
-				next if name_searchable_values.include?(name)
+			names_to_add = names.uniq - NameSearch::Name.excluded_values - name_searchable_values
+			names_to_add.each do |name|
 				name_searchables.create :name => NameSearch::Name.find_or_create_by_value(name)
 			end
 		end
