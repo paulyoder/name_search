@@ -5,4 +5,5 @@ module PersonSearch
 	require 'name_search/models/searchable.rb'
 	require 'name_search/name_search_on.rb'
 	require 'name_search/name_searchables_concerns.rb'
+	require 'name_search/search.rb'
 end
