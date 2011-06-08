@@ -11,15 +11,14 @@ module NameSearch
 			names = []
 			attributes = self.class.name_search_attributes
 			attributes.each do |att|
-				att_value = self.send(att)
-				att_names = att_value.split(/[ -]/)
-				att_names.each{ |att_name| names << scrub_name(att_name) }
+				value = self.send(att)
+				names.concat(NameSearch::Name.scrub_and_split_name(value))
 			end
 			names
 		end
 
 		def create_new_name_searchables(names)
-			names_to_add = names.uniq - NameSearch::Name.excluded_values - name_searchable_values
+			names_to_add = names - name_searchable_values
 			names_to_add.each do |name|
 				name_searchables.create :name => NameSearch::Name.find_or_create_by_value(name)
 			end
@@ -37,10 +36,6 @@ module NameSearch
 
 		def name_search_attributes_changed?()
 			(changed & self.class.name_search_attributes.map(&:to_s)).length > 0
-		end
-
-		def scrub_name(name)
-			name.downcase.gsub(/[^A-Za-z0-9]/, '')
 		end
 	end
 end

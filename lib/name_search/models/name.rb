@@ -4,7 +4,6 @@ module NameSearch
 		before_create :downcase_value
 
 		belongs_to :nick_name_family, :class_name => 'NameSearch::NickNameFamily'
-
 		has_many :nick_names, :through => :nick_name_family, :source => :names
 		def nick_name_values()
 			nick_names.map(&:value)
@@ -31,6 +30,12 @@ module NameSearch
 		def self.find(*args)
 			return Name.where(:value => args.first).first if args.first.kind_of?(String)
 			super
+		end
+
+		def self.scrub_and_split_name(name)
+			scrubbed = name.downcase.gsub(/[^a-z0-9 -]/, '')
+			split = scrubbed.split(/[ -]/).uniq
+			split - @@excluded_values
 		end
 
 		private

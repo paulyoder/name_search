@@ -20,8 +20,11 @@ describe NameSearch::Search do
 			Customer.create! :name => 'Paul'
 			Customer.create! :name => 'Ben Miller'
 			Customer.create! :name => 'Ben Miller'
+			Customer.create! :name => 'Benjamin'
 			Customer.create! :name => 'Fred Flintstone'
 			Customer.create! :name => 'Fred Smith'
+
+			NameSearch::Name.relate_nick_names('benjamin', 'ben')
 		end
 			
 		context 'single name' do
@@ -43,6 +46,23 @@ describe NameSearch::Search do
 			end
 		end
 
-		it 'should parse the names argument correctly'
+		context 'nicknames' do
+			it 'should return models in same nick name family' do
+				search(Customer, 'ben').select{|x| x.name == 'Benjamin'}.length.should == 1
+			end
+
+			pending 'should return exact matches before nick name matches' do
+				results = search(Customer, 'ben')
+				#ben_result_index = 
+				#benjamin_result_index = 
+			end
+		end
+
+		context 'should parse the names argument correctly' do
+			it 'should filter out non-alpha-numeric characters' do
+				results = search(Customer, 'miller,')
+				results.select{|x| x.name =~ /Miller/}.length.should == 2
+			end
+		end
 	end
 end

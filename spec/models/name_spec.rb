@@ -139,6 +139,36 @@ describe NameSearch::Name do
 		end
 	end
 
+	describe '.scrub_and_split_name' do
+		def scrub_and_split(name)
+			NameSearch::Name.scrub_and_split_name(name)
+		end
+
+		it 'downcases names' do
+			scrub_and_split('Paul').should include('paul')
+		end
+
+		it 'removes non-alphanumeric characters' do
+			scrub_and_split('McD8n@ld').should include('mcd8nld')
+		end
+
+		it 'splits on spaces' do
+			scrub_and_split('Paul Yoder').should include('paul', 'yoder')
+		end
+
+		it 'splits on hyphens' do
+			scrub_and_split('Sue Smith-Miller').should include('smith', 'miller')
+		end
+
+		it 'removes excluded_values' do
+			scrub_and_split('Paul and Jen Yoder').should_not include('and')
+		end
+
+		it 'removes duplicate names' do
+			scrub_and_split('Paul Paul').length.should == 1
+		end
+	end
+
 	def find_name(name_or_id)
 		NameSearch::Name.find(name_or_id)
 	end
