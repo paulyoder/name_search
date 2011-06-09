@@ -6,6 +6,10 @@ module NameSearch
 			create_new_name_searchables(names)
 			destroy_orphaned_name_searchables(names)
 		end
+		
+		def name_searchable_values(force_reload = false)
+			name_searchables(force_reload).map{|x| x.name.value}
+		end
 
 		def name_search_attributes_names()
 			names = []

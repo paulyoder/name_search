@@ -83,4 +83,11 @@ describe NameSearch::NameSearchablesConcerns do
 			end
 		end
 	end
+
+	describe 'name_searchable_values' do
+		it 'maps name_searchbles.name.value' do
+			c = Customer.create! :name => 'Paul Yoder'
+			c.name_searchable_values.should include('paul', 'yoder')
+		end
+	end
 end

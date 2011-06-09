@@ -10,10 +10,6 @@ module NameSearch
 				after_save :sync_name_searchables
 				has_many :name_searchables, :as => :searchable, :dependent => :destroy,
 					:include => :name, :class_name => 'NameSearch::Searchable'
-				
-				def name_searchable_values(force_reload = false)
-					name_searchables(force_reload).map{|x| x.name.value}
-				end
 			end
 		end
 	end

@@ -21,13 +21,6 @@ describe NameSearch::NameSearchOn do
 			end
 		end
 
-		describe 'name_searchable_values' do
-			it 'maps name_searchbles.name.value' do
-				c = Customer.create! :name => 'Paul Yoder'
-				c.name_searchable_values.should include('paul', 'yoder')
-			end
-		end
-
 		context 'after_save callback' do
 			it 'calls sync_name_searchables method' do
 				Customer._save_callbacks.
