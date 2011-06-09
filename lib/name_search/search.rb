@@ -1,6 +1,6 @@
 module NameSearch
 	class Search < Array
-		def initialize(klass, name)
+		def initialize(klass, name, options = {})
 			names = Name.scrub_and_split_name(name)
 			matches = klass.joins(:name_searchables).
 									where(:name_search_searchables => { 

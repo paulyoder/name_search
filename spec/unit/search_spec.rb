@@ -72,5 +72,11 @@ describe NameSearch::Search do
 				results.select{|x| x.name =~ /Miller/}.length.should == 2
 			end
 		end
+
+		describe 'options' do
+			describe ':return_search_results' do
+				
+			end
+		end
 	end
 end
