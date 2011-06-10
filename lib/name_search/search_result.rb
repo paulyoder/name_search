@@ -7,8 +7,8 @@ module NameSearch
       @exact_name_matches = model.name_searchable_values & searched_names
       @nick_name_matches  = model.name_searchable_values & searched_nick_names
       @matched_names      = @exact_name_matches + @nick_name_matches
-      @match_score        = (@exact_name_matches.length * 2) +
-                            (@nick_name_matches.length * 1)
+      @match_score        = (@exact_name_matches.length * 4) +
+                            (@nick_name_matches.length * 3)
 		end
 	end
 end
