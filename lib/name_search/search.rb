@@ -1,10 +1,10 @@
 module NameSearch
 	class Search < Array
-		def initialize(klass, name, options = {})
+		def initialize(klass_or_query, name, options = {})
 			name_values = Name.scrub_and_split_name(name)
       nick_values = (options[:match_mode] == :exact) ? [] : nick_name_values(name_values)
 
-      results = matched_models(klass, name_values + nick_values).
+      results = matched_models(klass_or_query, name_values + nick_values).
                   map{|x| SearchResult.new(x, name_values, nick_values) }.
                   sort{|a,b| b.match_score <=> a.match_score }
 
@@ -15,12 +15,12 @@ module NameSearch
 			self.concat(results)
 		end
 
-    def matched_models(klass, name_values_to_search)
-			klass.joins(:name_searchables).
+    def matched_models(klass_or_query, name_values_to_search)
+			klass_or_query.joins(:name_searchables).
 			  where(:name_search_searchables => { 
 				  :name_id => name_search_name_ids(name_values_to_search) }).
 				all.
-				uniq
+        uniq
     end
 
 		def name_search_name_ids(name_values)

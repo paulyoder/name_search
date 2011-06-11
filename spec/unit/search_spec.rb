@@ -19,8 +19,8 @@ describe NameSearch::Search do
 			Customer.create! :name => 'Paul'
 			Customer.create! :name => 'Paul'
 			Customer.create! :name => 'Ben Miller'
-			Customer.create! :name => 'Ben Miller'
-			Customer.create! :name => 'Benjamin'
+			Customer.create! :name => 'Ben Miller', :state => 'NE'
+			Customer.create! :name => 'Benjamin', :state => 'NE'
 			Customer.create! :name => 'Fred Flintstone'
 			Customer.create! :name => 'Fred Smith'
 			Customer.create! :name => 'Fred Samuel Smith'
@@ -116,6 +116,12 @@ describe NameSearch::Search do
       end
 		end
 
-    pending 'class_or_active_relation'
+    describe 'klass_or_query' do
+      describe 'query' do
+        it 'only searches on models in within the query' do
+          search(Customer.where(:state => 'NE'), 'ben').length.should == 2
+        end
+      end
+    end
 	end
 end
