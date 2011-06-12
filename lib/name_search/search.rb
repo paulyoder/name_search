@@ -29,8 +29,8 @@ module NameSearch
 
     def nick_name_values(name_values)
       results = []
-      name_values.each do |name|
-        results.concat(Name.find(name).nick_name_values)
+      Name.where(:value => name_values).includes(:nick_names).each do |name|
+        results.concat(name.nick_name_values)
       end
       results - name_values
     end

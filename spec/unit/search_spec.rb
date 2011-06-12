@@ -123,5 +123,7 @@ describe NameSearch::Search do
         end
       end
     end
+
+    pending 'convert tabs to spaces in entire project'
 	end
 end
