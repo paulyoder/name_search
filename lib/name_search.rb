@@ -7,4 +7,5 @@ module PersonSearch
   require 'name_search/name_searchables_concerns.rb'
   require 'name_search/search.rb'
   require 'name_search/search_result.rb'
+  require 'name_search/active_relation_search.rb'
 end
