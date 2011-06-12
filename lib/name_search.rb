@@ -8,4 +8,5 @@ module PersonSearch
   require 'name_search/search.rb'
   require 'name_search/search_result.rb'
   require 'name_search/active_relation_search.rb'
+  require 'name_search/active_record_base_search.rb'
 end
