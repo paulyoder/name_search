@@ -67,23 +67,27 @@ describe NameSearch::Search do
     end
 
     context 'search results' do
+      before :all do
+        @results = search(Customer, 'benjamin')
+      end
+
       context 'exact_name_matches' do
         it 'should include searched names that match' do
-          search(Customer, 'benjamin').map(&:exact_name_matches).flatten.should include('benjamin')
+          @results.map(&:exact_name_matches).flatten.should include('benjamin')
         end
 
         it 'should not include searched nick names' do
-          search(Customer, 'benjamin').map(&:exact_name_matches).flatten.should_not include('ben')
+          @results.map(&:exact_name_matches).flatten.should_not include('ben')
         end
       end
 
       context 'nick_name_matches' do
         it 'should include nick names' do
-          search(Customer, 'benjamin').map(&:nick_name_matches).flatten.should include('ben')
+          @results.map(&:nick_name_matches).flatten.should include('ben')
         end
 
         it 'should not include searched names' do
-          search(Customer, 'benjamin').map(&:nick_name_matches).flatten.should_not include('benjamin')
+          @results.map(&:nick_name_matches).flatten.should_not include('benjamin')
         end
       end
     end
