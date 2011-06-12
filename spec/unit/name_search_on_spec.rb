@@ -50,5 +50,9 @@ describe NameSearch::NameSearchOn do
       Customer.name_search_attributes.should == [:name]
       User.name_search_attributes.should == [:first_name, :last_name]
     end
+
+    it 'adds name_search class method' do
+      Customer.should respond_to :name_search
+    end
   end
 end
