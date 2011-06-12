@@ -6,9 +6,9 @@ Factory.define :nick_name_family, :class => NameSearch::NickNameFamily do |t|
 end
 
 Factory.define :name_searchable, :class => NameSearch::Searchable do |t|
-	t.association :name
+  t.association :name
 end
 
 Factory.sequence :unique_name do |n|
-	"Paul #{n}"
+  "Paul #{n}"
 end

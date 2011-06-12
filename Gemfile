@@ -5,10 +5,10 @@ gem 'capybara', '>= 0.4.0'
 gem 'sqlite3'
 
 group :development, :test do
-	gem 'factory_girl'
+  gem 'factory_girl'
 end
 
 group :test do
-	gem 'rspec-rails', '>= 2.0.0.beta'
-	gem 'ruby-debug19'
+  gem 'rspec-rails', '>= 2.0.0.beta'
+  gem 'ruby-debug19'
 end

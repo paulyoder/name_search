@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe NameSearch::SearchResult do
-	let(:customer) { Customer.create! :name => 'Billy Joe Bob' }
-	let(:model) { NameSearch::SearchResult.new(customer, [], []) }
+  let(:customer) { Customer.create! :name => 'Billy Joe Bob' }
+  let(:model) { NameSearch::SearchResult.new(customer, [], []) }
   let(:subject) { NameSearch::SearchResult.new(customer,
                                                %w( william joe robert henry), 
                                                %w( bill billy joseph jo bob )) }
 
-	model_responds_to :model,
-										:matched_names,
-										:exact_name_matches,
-										:nick_name_matches,
-										:match_score
+  model_responds_to :model,
+                    :matched_names,
+                    :exact_name_matches,
+                    :nick_name_matches,
+                    :match_score
 
   it 'should set first argument as model attribute' do
     subject.model.should == customer

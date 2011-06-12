@@ -27,10 +27,10 @@ RSpec.configure do |config|
   require 'rspec/expectations'
   config.include RSpec::Matchers
   config.mock_with :rspec
-	config.extend ModelSpecHelpers
+  config.extend ModelSpecHelpers
 end
 
 Factory.definition_file_paths = [
-	File.expand_path('spec/factories')
+  File.expand_path('spec/factories')
 ]
 Factory.find_definitions
