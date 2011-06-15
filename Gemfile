@@ -6,6 +6,7 @@ gem 'sqlite3'
 
 group :development, :test do
   gem 'factory_girl'
+  gem 'ruby-debug19'
 end
 
 group :test do

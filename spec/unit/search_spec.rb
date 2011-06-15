@@ -25,7 +25,7 @@ describe NameSearch::Search do
       Customer.create! :name => 'Fred Smith'
       Customer.create! :name => 'Fred Samuel Smith'
 
-      NameSearch::Name.relate_nick_names('benjamin', 'ben')
+      NameSearch::NickNameFamily.create_family('benjamin', 'ben')
     end
       
     context 'single name' do

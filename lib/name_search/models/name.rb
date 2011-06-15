@@ -3,8 +3,13 @@ module NameSearch
     set_table_name :name_search_names
     before_create :downcase_value
 
-    belongs_to :nick_name_family, :class_name => 'NameSearch::NickNameFamily'
-    has_many :nick_names, :through => :nick_name_family, :source => :names
+    has_many :nick_name_family_joins
+    has_many :nick_name_families, :through => :nick_name_family_joins
+            
+    def nick_names()
+      nick_name_families.map(&:names).flatten
+    end
+
     def nick_name_values()
       nick_names.map(&:value)
     end
@@ -12,20 +17,7 @@ module NameSearch
     validates :value, :uniqueness => true
 
     cattr_accessor :excluded_values
-    @@excluded_values = %w( and & or )
-
-    def self.relate_nick_names(*names)
-      family = get_family_for_nick_names(names)
-      names.each do |name|
-        name_record = Name.find(name)
-        if name_record.nil?
-          name_record = Name.create! :value => name, :nick_name_family => family
-        elsif name_record.nick_name_family != family
-          name_record.nick_name_family = family
-          name_record.save!
-        end
-      end
-    end
+    @@excluded_values = %w( and or )
 
     def self.find(*args)
       return Name.where(:value => args.first).first if args.first.kind_of?(String)
