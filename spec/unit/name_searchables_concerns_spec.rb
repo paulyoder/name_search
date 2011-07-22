@@ -1,9 +1,18 @@
 require 'spec_helper'
 
 describe NameSearch::NameSearchablesConcerns do
-  describe 'sync_name_searchables' do
+  describe 'update_name_searchables' do
+    before :all do
+      Customer.skip_callback(:save, :after, :sync_name_searchables)
+    end
+
+    after :all do
+      Customer.set_callback(:save, :after, :sync_name_searchables)
+    end
+
     def new_customer(name)
       @customer = Customer.create! :name => name
+      @customer.update_name_searchables
     end
 
     def customer_name_values(force_reload = false)
@@ -72,15 +81,35 @@ describe NameSearch::NameSearchablesConcerns do
       it 'does not re-add name values that did not change' do
         new_customer('Jen York')
         @customer.name = 'Jen Yoder'
-        @customer.save!
+        @customer.update_name_searchables
         customer_name_values.count('jen').should == 1
       end
       it 'deletes name values that no longer exist' do
         new_customer('Jen York')
         @customer.name = 'Jen Yoder'
-        @customer.save!
+        @customer.update_name_searchables
         customer_name_values(true).should_not include('york')
       end
+    end
+  end
+
+  describe 'sync_name_searchables' do
+    it 'is set as an after save callback' do
+      Customer._save_callbacks.any?{|callback| callback.kind == :after &&
+                                               callback.filter = :sync_name_searchables}.should be_true
+    end
+  end
+
+  describe 'name_search_attributes_changed?' do
+    it 'returns true when a name_search attribute is changed' do
+      customer = Customer.create! :name => 'Paul'
+      customer.name = 'Ben'
+      customer.name_search_attributes_changed?().should be_true
+    end
+    it 'returns false when a name_search attribute is not changed' do
+      customer = Customer.create! :name => 'Paul', :state => 'IN'
+      customer.state = 'NE'
+      customer.name_search_attributes_changed?().should be_false
     end
   end
 

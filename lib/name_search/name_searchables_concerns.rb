@@ -2,6 +2,10 @@ module NameSearch
   module NameSearchablesConcerns
     def sync_name_searchables
       return unless name_search_attributes_changed?
+      update_name_searchables
+    end
+
+    def update_name_searchables
       names = name_search_attributes_names
       create_new_name_searchables(names)
       destroy_orphaned_name_searchables(names)
