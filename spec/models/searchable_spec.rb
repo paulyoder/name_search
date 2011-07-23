@@ -5,7 +5,7 @@ describe NameSearch::Searchable do
     defined?(NameSearch::Searchable).should be_true
   end
 
-  specify 'table name should be person_search_name_searchables' do
+  specify 'table name should be name_search_searchables' do
     NameSearch::Searchable.table_name.should == 'name_search_searchables'
   end
 

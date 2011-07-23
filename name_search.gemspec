@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Search for people's names while taking into consideration nick names and word ordering."
   s.authors     = ["Paul Yoder"]
   s.email       = ["paulyoder@gmail.com"]
-  s.homepage    = "https://github.com/paulyoder/person_search"
+  s.homepage    = "https://github.com/paulyoder/name_search"
 
   s.add_depency "rails", "~> 3.0"
 

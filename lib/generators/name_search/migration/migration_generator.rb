@@ -5,7 +5,7 @@ module NameSearch
   class MigrationGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
-    desc 'Generates migration for person_search models'
+    desc 'Generates migration for name_search models'
 
     def self.source_root
       @source_root ||= File.join(File.dirname(__FILE__), 'templates')
