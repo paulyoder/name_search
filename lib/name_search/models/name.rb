@@ -17,7 +17,7 @@ module NameSearch
     validates :value, :uniqueness => true
 
     cattr_accessor :excluded_values
-    @@excluded_values = %w( and or )
+    @@excluded_values = ['and', 'or', '']
 
     def self.find(*args)
       return Name.where(:value => args.first).first if args.first.kind_of?(String)

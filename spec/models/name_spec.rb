@@ -55,6 +55,10 @@ describe NameSearch::Name do
       it 'or' do
         NameSearch::Name.excluded_values.should include 'or'
       end
+
+      it 'blank string' do
+        NameSearch::Name.excluded_values.should include ''
+      end
     end
   end
 
@@ -104,6 +108,10 @@ describe NameSearch::Name do
 
     it 'removes duplicate names' do
       scrub_and_split('Paul Paul').length.should == 1
+    end
+
+    it 'removes non-alphanumeric words' do
+      scrub_and_split('Paul & Jen').length.should == 2
     end
   end
 
