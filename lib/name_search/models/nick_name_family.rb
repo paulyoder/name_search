@@ -15,10 +15,7 @@ module NameSearch
     end
 
     def self.update_families_from_file(file_name)
-      file = File.open(file_name)
-      file.each_line do |line|
-        process_file_line(line)
-      end
+      File.open(file_name).each_line{|line| process_file_line(line)}
     end
 
     private
