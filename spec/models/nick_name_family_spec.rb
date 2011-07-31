@@ -25,6 +25,11 @@ describe NameSearch::NickNameFamily do
       family.names.map(&:value).should include('ben', 'benjamin')
     end
 
+    it 'allows a single array to also be used as the argument' do
+      family = NameSearch::NickNameFamily.create_family(['ben', 'benjamin'])
+      family.names.map(&:value).should include('ben', 'benjamin')
+    end 
+
     context 'when none of the names are in the database' do
       before :all do
         delete_names
@@ -89,6 +94,80 @@ describe NameSearch::NickNameFamily do
 
     def find_name(name_or_id)
       NameSearch::Name.find(name_or_id)
+    end
+  end
+
+  describe '.update_families_from_file' do
+    before :all do
+      NameSearch::NickNameFamily.delete_all
+    end
+
+    after :all do
+      NameSearch::NickNameFamily.delete_all
+      NameSearch::Name.delete_all
+      NameSearch::NickNameFamilyJoin.delete_all
+    end
+
+    context 'when valid names' do
+      before :all do
+        NameSearch::NickNameFamily.create_family('theodore', 'ted')
+        NameSearch::NickNameFamily.create_family('samuel', 'sam')
+        NameSearch::NickNameFamily.create_family('adam', 'ad')
+        NameSearch::NickNameFamily.create_family('adolph', 'ade')
+        NameSearch::NickNameFamily.create_family('delbert', 'del')
+        NameSearch::NickNameFamily.update_families_from_file(create_names_file)
+      end
+
+      after :all do
+        delete_names_file
+      end
+
+      def create_names_file
+        @names_file = Tempfile.new('good_names')
+        @names_file.puts 'andrew andy drew'
+        @names_file.puts 'theodore teddy ted'
+        @names_file.puts 'sam samantha sammie'
+        @names_file.puts 'ad ade del adelbert'
+        @names_file.flush
+        @names_file.path
+      end
+
+      def delete_names_file
+        @names_file.close!
+      end
+
+      context 'when the first name of the row is not part of a nick name family' do
+        it 'creates a new family' do
+          andrew = NameSearch::Name.where(:value => 'andrew').first
+          andrew.nick_name_values.should include('andy', 'drew')
+        end
+      end
+
+      context 'when only the first name is part of a nick name family' do
+        it 'creates a new family' do
+          sam_families = NameSearch::Name.where(:value => 'sam').first.nick_name_families
+          sam_families.length.should == 2
+          sam_families.any?{|x| (x.names.map(&:value) & ['samuel', 'sam']).length == 2}.should be_true
+          sam_families.any?{|x| (x.names.map(&:value) & ['samantha', 'sam', 'sammie']).length == 3}.should be_true
+        end
+      end
+
+      context 'when the first name and another name is part of the same nick name family' do
+        it 'the new names are added to the common nick name family' do
+          theodore = NameSearch::Name.where(:value => 'theodore').first
+          theodore.nick_name_families.length.should == 1
+          theodore.nick_name_values.should include('teddy', 'ted')
+        end
+      end
+
+      context 'when the names are in 3 or more nick name families' do
+        it 'a new nick name family is created' do
+          ad_families = NameSearch::Name.where(:value => 'ad').first.nick_name_families
+          ad_families.length.should == 2
+          ad_families.any?{|x| (x.names.map(&:value) & %w( adam ad )).length == 2}.should be_true
+          ad_families.any?{|x| (x.names.map(&:value) & %w( ad ade del adelbert )).length == 4}.should be_true
+        end
+      end
     end
   end
 end
