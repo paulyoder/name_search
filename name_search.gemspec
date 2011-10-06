@@ -3,8 +3,8 @@ require 'name_search/version'
 
 Gem::Specification.new do |s|
   s.name        = 'name_search'
-  s.summary     = "Search for people's names while taking into consideration nick names and word ordering."
-  s.description = "Search for people's names while taking into consideration nick names and word ordering."
+  s.summary     = "Perform natural searches on people’s names."
+  s.description = "A natural search for a person by name will not only take into consideration word ordering ('Andrew Smith' == 'Smith, Andrew') but it will also look for nick names ('Andy' == 'Andrew')"
   s.authors     = ['Paul Yoder']
   s.email       = ['paulyoder@gmail.com']
   s.homepage    = 'https://github.com/paulyoder/name_search'
