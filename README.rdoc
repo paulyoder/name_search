@@ -1,3 +1,5 @@
 = Name Search
 
-Search for names while taking into consideration nick names and word ordering.
+Perform natural searches on people's names
+
+For example, a search for 'Andrew Smith' will return matches on 'Andy Smith' and 'Smith, Andrew'
