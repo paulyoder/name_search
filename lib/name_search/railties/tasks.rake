@@ -15,4 +15,10 @@ namespace :name_search do
     end
     puts 'finished'
   end
+
+  desc 'adds the 1990 census nick names to the database (http://www.censusdiggins.com/nicknames.htm)'
+  task :add_census_nick_names => :environment do
+    census_file = File.expand_path('../../../assets/census_nick_names.txt', __FILE__)
+    NameSearch::NickNameFamily.update_families_from_file(census_file)
+  end
 end
