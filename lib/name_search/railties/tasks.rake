@@ -21,4 +21,10 @@ namespace :name_search do
     census_file = File.expand_path('../../../assets/census_nick_names.txt', __FILE__)
     NameSearch::NickNameFamily.update_families_from_file(census_file)
   end
+
+  desc 'adds the contributed nick names to the database'
+  task :add_contributed_nick_names => :environment do
+    nick_name_file = File.expand_path('../../../assets/contributed_nick_names.txt', __FILE__)
+    NameSearch::NickNameFamily.update_families_from_file(nick_name_file)
+  end
 end
