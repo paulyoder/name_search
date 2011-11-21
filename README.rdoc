@@ -3,3 +3,29 @@
 Perform natural searches on people's names
 
 For example, a search for 'Andrew Smith' will return matches on 'Andy Smith' and 'Smith, Andrew'
+
+== Installation
+
+Add the gem to the gemfile
+
+   gem 'name_search'
+
+Generate the migration file
+
+   rails generate name_search:migration
+
+Run the migration
+
+   rake db:migrate
+
+=== Populating Nick Names
+
+A couple of rake tasks are included to pre-populate the database with common nick names.
+
+Nick names from the 1990 census
+
+   rake name_search:add_census_nick_names
+
+Other common nick names that are not part of the 1990 census
+
+   rake name_search:add_contributed_nick_names
