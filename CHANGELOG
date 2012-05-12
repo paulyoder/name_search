@@ -1,0 +1,2 @@
+== 0.9.1
+* removed warning for rails 3.1 about class_inheritable_attribute
