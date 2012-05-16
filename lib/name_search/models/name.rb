@@ -1,6 +1,6 @@
 module NameSearch
   class Name < ActiveRecord::Base
-    set_table_name :name_search_names
+    self.table_name = :name_search_names
     before_create :downcase_value
 
     has_many :nick_name_family_joins

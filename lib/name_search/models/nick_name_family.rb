@@ -1,6 +1,6 @@
 module NameSearch
   class NickNameFamily < ActiveRecord::Base
-    set_table_name :name_search_nick_name_families
+    self.table_name = :name_search_nick_name_families
 
     has_many :nick_name_family_joins
     has_many :names, :through => :nick_name_family_joins
