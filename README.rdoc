@@ -1,8 +1,10 @@
 = Name Search
 
-Perform natural searches on people's names
+Perform intelligent searches on people's names.
 
-For example, a search for 'Andrew Smith' will return matches on 'Andy Smith' and 'Smith, Andrew'
+Name search uses common nick names and first name/last name ordering to perform its searches.
+
+For example, a search for 'Andrew' will return matches on 'Andrew' and 'Andy', while a search for 'Andrew Smith' will return matches on 'Andy Smith' and 'Smith, Andrew'
 
 == Installation
 
