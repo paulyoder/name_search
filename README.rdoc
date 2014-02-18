@@ -1,4 +1,5 @@
 = Name Search
+{<img src="https://travis-ci.org/paulyoder/name_search.png?branch=master" alt="Build Status" />}[https://travis-ci.org/paulyoder/name_search]
 
 Perform intelligent searches on people's names.
 
