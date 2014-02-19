@@ -9,7 +9,7 @@ module NameSearch
       family = NickNameFamily.create
       scrubbed_names = nick_names.flatten.map{|x| Name.scrub_and_split_name(x)}.flatten
       scrubbed_names.each do |name|
-        family.names << Name.find_or_create_by_value(name)
+        family.names << Name.find_or_create_by(value: name)
       end
       family
     end
@@ -22,17 +22,17 @@ module NameSearch
 
     def self.process_file_line(line)
       scrubbed_name_values = line.split.map{|x| Name.scrub_and_split_name(x)}.flatten
-      names = Name.where(:value => scrubbed_name_values).all
+      names = Name.where(:value => scrubbed_name_values).to_a
       first_name = names.find{|x| x.value == scrubbed_name_values.first}
 
       if should_create_new_family?(first_name, names)
         family = NickNameFamily.create
         scrubbed_name_values.each do |name|
-          family.names << Name.find_or_create_by_value(name)
+          family.names << Name.find_or_create_by(value: name)
         end
       else
         scrubbed_name_values.from(1).each do |name|
-          first_name.nick_name_families.first.names << Name.find_or_create_by_value(name)
+          first_name.nick_name_families.first.names << Name.find_or_create_by(value: name)
         end
       end
     end

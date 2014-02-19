@@ -28,7 +28,7 @@ module NameSearch
     def create_new_name_searchables(names)
       names_to_add = names - name_searchable_values
       names_to_add.each do |name|
-        name_searchables.create :name => NameSearch::Name.find_or_create_by_value(name)
+        name_searchables.create name: NameSearch::Name.find_or_create_by(value: name)
       end
     end
 

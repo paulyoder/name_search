@@ -11,8 +11,8 @@ module NameSearch
         self.name_search_attributes = attributes
 
         after_save :sync_name_searchables
-        has_many :name_searchables, :as => :searchable, :dependent => :destroy,
-          :include => :name, :class_name => 'NameSearch::Searchable'
+        has_many :name_searchables, -> { includes :name }, as: :searchable,
+          dependent: :destroy, class_name: 'NameSearch::Searchable'
       end
     end
   end

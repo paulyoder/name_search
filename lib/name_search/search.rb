@@ -24,7 +24,7 @@ module NameSearch
       klass_or_query.includes(:name_searchables).
         where(:name_search_searchables => { 
           :name_id => names_to_search.map(&:id) }).
-        all.
+        to_a.
         uniq
     end
 

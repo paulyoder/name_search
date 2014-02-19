@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ['paulyoder@gmail.com']
   s.homepage    = 'https://github.com/paulyoder/name_search'
 
-  s.add_dependency 'rails', '>= 3.0.0'
+  s.add_dependency 'rails', '>= 4.0.0'
 
   s.files   = Dir["lib/**/*"] + ['MIT-LICENSE', 'Rakefile', 'Gemfile', 'README.rdoc']
   s.version = NameSearch::VERSION
