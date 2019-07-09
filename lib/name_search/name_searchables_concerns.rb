@@ -12,7 +12,10 @@ module NameSearch
     end
     
     def name_searchable_values(force_reload = false)
-      name_searchables(force_reload).map{|x| x.name.value}
+      if force_reload
+        name_searchables.reload
+      end
+      name_searchables.map{|x| x.name.value}
     end
 
     def name_search_attributes_names()
@@ -43,7 +46,7 @@ module NameSearch
     end
 
     def name_search_attributes_changed?()
-      (changed & self.class.name_search_attributes.map(&:to_s)).length > 0
+      (saved_changes.keys & self.class.name_search_attributes.map(&:to_s)).length > 0
     end
   end
 end
