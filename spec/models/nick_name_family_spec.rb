@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe NameSearch::NickNameFamily do
   it 'should exist' do
-    defined?(NameSearch::NickNameFamily).should be_true
+    expect(defined?(NameSearch::NickNameFamily)).to eq 'constant'
   end
 
   specify 'table name should be name_search_nick_name_families' do
-    NameSearch::NickNameFamily.table_name.should == 'name_search_nick_name_families'
+    expect(NameSearch::NickNameFamily.table_name).to eq 'name_search_nick_name_families'
   end
 
   let(:model) { NameSearch::NickNameFamily.new }
@@ -17,17 +17,17 @@ describe NameSearch::NickNameFamily do
   describe '.create_family' do
     it 'uses Name.scrub_and_split_name' do
       family = NameSearch::NickNameFamily.create_family('susan,', 'Miller-smith')
-      family.names.map(&:value).should include('susan', 'miller', 'smith')
+      expect(family.names.map(&:value)).to include('susan', 'miller', 'smith')
     end
 
     it 'returns the NickNameFamily used' do
       family = NameSearch::NickNameFamily.create_family('ben', 'benjamin')
-      family.names.map(&:value).should include('ben', 'benjamin')
+      expect(family.names.map(&:value)).to include('ben', 'benjamin')
     end
 
     it 'allows a single array to also be used as the argument' do
       family = NameSearch::NickNameFamily.create_family(['ben', 'benjamin'])
-      family.names.map(&:value).should include('ben', 'benjamin')
+      expect(family.names.map(&:value)).to include('ben', 'benjamin')
     end 
 
     context 'when none of the names are in the database' do
@@ -37,13 +37,13 @@ describe NameSearch::NickNameFamily do
       end
         
       it 'adds all names to the database' do
-        find_name('sue').should_not be_nil
-        find_name('suzie').should_not be_nil
-        find_name('susan').should_not be_nil
+        expect(find_name('sue')).to be_present
+        expect(find_name('suzie')).to be_present
+        expect(find_name('susan')).to be_present
       end
 
       it 'adds all names to the same family' do
-        @family.names.map(&:value).should include('sue', 'suzie', 'susan')
+        expect(@family.names.map(&:value)).to include('sue', 'suzie', 'susan')
       end
     end
 
@@ -55,12 +55,12 @@ describe NameSearch::NickNameFamily do
       end
 
       it 'adds the other names to the database' do
-        find_name('joseph').should_not be_nil
-        find_name('joey').should_not be_nil
+        expect(find_name('joseph')).to be_present
+        expect(find_name('joey')).to be_present
       end
 
       it 'all names have the same family' do
-        @family.names.map(&:value).should include('joseph', 'joey', 'joe')
+        expect(@family.names.map(&:value)).to include('joseph', 'joey', 'joe')
       end
     end
 
@@ -72,18 +72,19 @@ describe NameSearch::NickNameFamily do
       end
 
       it 'creates a new family' do
-        @family1.id.should_not == @family2.id
+        expect(@family1.id).to_not eq @family2.id
       end
 
       it 'the name is part of both families' do
-        find_name('sam').nick_name_family_ids.should include(@family1.id, @family2.id)
+        expect(find_name('sam').nick_name_family_ids).to include(@family1.id, @family2.id)
       end
 
       describe 'the unrelated nick names' do
         it 'are not part of the same family' do
-          (find_name('samantha').nick_name_family_ids &
-           find_name('samuel').nick_name_family_ids).
-          length.should == 0
+          expect(
+            (find_name('samantha').nick_name_family_ids &
+            find_name('samuel').nick_name_family_ids).
+            length).to eq 0
         end
       end
     end
@@ -141,33 +142,33 @@ describe NameSearch::NickNameFamily do
       context 'when the first name of the row is not part of a nick name family' do
         it 'creates a new family' do
           andrew = NameSearch::Name.where(:value => 'andrew').first
-          andrew.nick_name_values.should include('andy', 'drew')
+          expect(andrew.nick_name_values).to include('andy', 'drew')
         end
       end
 
       context 'when only the first name is part of a nick name family' do
         pending 'creates a new family' do
           sam_families = NameSearch::Name.where(:value => 'sam').first.nick_name_families
-          sam_families.length.should == 2
-          sam_families.any?{|x| (x.names.map(&:value) & ['samuel', 'sam']).length == 2}.should be_true
-          sam_families.any?{|x| (x.names.map(&:value) & ['samantha', 'sam', 'sammie']).length == 3}.should be_true
+          expect(sam_families.length).to eq 2
+          expect(sam_families.any?{|x| (x.names.map(&:value) & ['samuel', 'sam']).length == 2}).to eq true
+          expect(sam_families.any?{|x| (x.names.map(&:value) & ['samantha', 'sam', 'sammie']).length == 3}).to eq true
         end
       end
 
       context 'when the first name and another name is part of the same nick name family' do
         it 'the new names are added to the common nick name family' do
           theodore = NameSearch::Name.where(:value => 'theodore').first
-          theodore.nick_name_families.length.should == 1
-          theodore.nick_name_values.should include('teddy', 'ted')
+          expect(theodore.nick_name_families.length).to eq 1
+          expect(theodore.nick_name_values).to include('teddy', 'ted')
         end
       end
 
       context 'when the names are in 3 or more nick name families' do
         it 'a new nick name family is created' do
           ad_families = NameSearch::Name.where(:value => 'ad').first.nick_name_families
-          ad_families.length.should == 2
-          ad_families.any?{|x| (x.names.map(&:value) & %w( adam ad )).length == 2}.should be_true
-          ad_families.any?{|x| (x.names.map(&:value) & %w( ad ade del adelbert )).length == 4}.should be_true
+          expect(ad_families.length).to eq 2
+          expect(ad_families.any?{|x| (x.names.map(&:value) & %w( adam ad )).length == 2}).to eq true
+          expect(ad_families.any?{|x| (x.names.map(&:value) & %w( ad ade del adelbert )).length == 4}).to eq true
         end
       end
     end

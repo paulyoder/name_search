@@ -14,24 +14,24 @@ describe NameSearch::SearchResult do
                     :match_score
 
   it 'should set first argument as model attribute' do
-    subject.model.should == customer
+    expect(subject.model) == customer
   end
 
   describe '#exact_name_matches' do
     it 'should be names that match between name_searchable_values and searched_names' do
-      subject.exact_name_matches.should == ['joe']
+      expect(subject.exact_name_matches).to eq ['joe']
     end
   end
 
   describe '#nick_name_matches' do
     it 'should be names that match between name_searchable_values and searched_nick_names' do
-      subject.nick_name_matches.should == ['billy', 'bob']
+      expect(subject.nick_name_matches).to eq ['billy', 'bob']
     end
   end
 
   describe '#matched_names' do
     it 'should include name_searchable_values that were matched on' do
-      subject.matched_names.should == ['joe', 'billy', 'bob']
+      expect(subject.matched_names).to eq ['joe', 'billy', 'bob']
     end
   end
 
@@ -43,16 +43,16 @@ describe NameSearch::SearchResult do
     end
 
     it 'should add 4 for every exact_name_match' do
-      result('Paul',['paul'],[]).match_score.should == 4
+      expect(result('Paul',['paul'],[]).match_score).to eq 4
     end 
 
     it 'should add 3 for every nick_name_match' do
-      result('Benjamin Joe', [], ['benjamin']).match_score.should == 3
+      expect(result('Benjamin Joe', [], ['benjamin']).match_score).to eq 3
     end
 
     context 'when 2 exact_name_matches and 1 nick_name_match' do
       it 'should be 11' do
-        result('Billy Joe Bob', ['billy', 'joe'], ['bob']).match_score.should == 11
+        expect(result('Billy Joe Bob', ['billy', 'joe'], ['bob']).match_score).to eq 11
       end
     end
   end

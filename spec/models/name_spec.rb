@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe NameSearch::Name do
   it 'should exist' do
-    defined?(NameSearch::Name).should be_true
+    expect(defined?(NameSearch::Name)).to eq 'constant'
   end
 
   specify 'table name should be name_search_names' do
-    NameSearch::Name.table_name.should == 'name_search_names'
+    expect(NameSearch::Name.table_name).to eq 'name_search_names'
   end
 
   let(:model) { Factory.build :name }
@@ -23,41 +23,41 @@ describe NameSearch::Name do
     NameSearch::Name.delete_all
     name = Factory :name, :value => 'Paul'
     name.reload
-    name.value.should == 'paul'
+    expect(name.value).to eq 'paul'
   end
 
   describe '#nick_names' do
     it 'returns values for names in same NickNameFamily' do
       NameSearch::NickNameFamily.create_family('andrew', 'andy', 'drew')
-      find_name('andy').nick_names.map(&:value).should include('andrew','andy','drew')
+      expect(find_name('andy').nick_names.map(&:value)).to include('andrew','andy','drew')
     end
   end
 
   describe '#nick_name_values' do
     it 'returns the values for names in the same NickNameFamily' do
       NameSearch::NickNameFamily.create_family('andrew', 'andy', 'drew')
-      find_name('andrew').nick_name_values.should include('andrew','andy','drew')
+      expect(find_name('andrew').nick_name_values).to include('andrew','andy','drew')
     end
 
     it 'returns empty array if no nick names' do
       delete_names
       NameSearch::Name.create! :value => 'paul'
-      find_name('paul').nick_name_values.length.should == 0
+      expect(find_name('paul').nick_name_values.length).to eq 0
     end
   end
 
   describe '.excluded_values' do
     context 'includes' do
       it 'and' do
-        NameSearch::Name.excluded_values.should include 'and'
+        expect(NameSearch::Name.excluded_values).to include 'and'
       end
       
       it 'or' do
-        NameSearch::Name.excluded_values.should include 'or'
+        expect(NameSearch::Name.excluded_values).to include 'or'
       end
 
       it 'blank string' do
-        NameSearch::Name.excluded_values.should include ''
+        expect(NameSearch::Name.excluded_values).to include ''
       end
     end
   end
@@ -70,13 +70,13 @@ describe NameSearch::Name do
 
     context 'when an integer argument is used' do
       it 'returns name with same id' do
-        find_name(@name.id).id.should == @name.id
+        expect(find_name(@name.id).id).to eq @name.id
       end
     end
 
     context 'when a string argument is used' do
       it 'returns name with same value' do
-        find_name('joe').id.should == @name.id
+        expect(find_name('joe').id).to eq @name.id
       end
     end
   end
@@ -87,31 +87,31 @@ describe NameSearch::Name do
     end
 
     it 'downcases names' do
-      scrub_and_split('Paul').should include('paul')
+      expect(scrub_and_split('Paul')).to include('paul')
     end
 
     it 'removes non-alphanumeric characters' do
-      scrub_and_split('McD8n@ld').should include('mcd8nld')
+      expect(scrub_and_split('McD8n@ld')).to include('mcd8nld')
     end
 
     it 'splits on spaces' do
-      scrub_and_split('Paul Yoder').should include('paul', 'yoder')
+      expect(scrub_and_split('Paul Yoder')).to include('paul', 'yoder')
     end
 
     it 'splits on hyphens' do
-      scrub_and_split('Sue Smith-Miller').should include('smith', 'miller')
+      expect(scrub_and_split('Sue Smith-Miller')).to include('smith', 'miller')
     end
 
     it 'removes excluded_values' do
-      scrub_and_split('Paul and Jen Yoder').should_not include('and')
+      expect(scrub_and_split('Paul and Jen Yoder')).to_not include('and')
     end
 
     it 'removes duplicate names' do
-      scrub_and_split('Paul Paul').length.should == 1
+      expect(scrub_and_split('Paul Paul').length).to eq 1
     end
 
     it 'removes non-alphanumeric words' do
-      scrub_and_split('Paul & Jen').length.should == 2
+      expect(scrub_and_split('Paul & Jen').length).to eq 2
     end
   end
 

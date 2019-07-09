@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe NameSearch::NickNameFamilyJoin do
   it 'should exist' do
-    defined?(NameSearch::NickNameFamilyJoin).should be_true
+    expect(defined?(NameSearch::NickNameFamilyJoin)).to eq 'constant'
   end
   
   specify 'table name should be name_search_nick_name_family_joins' do
-    NameSearch::NickNameFamilyJoin.table_name.should == 'name_search_nick_name_family_joins'
+    expect(NameSearch::NickNameFamilyJoin.table_name).to eq 'name_search_nick_name_family_joins'
   end
 
   let(:model) { NameSearch::NickNameFamilyJoin.new }

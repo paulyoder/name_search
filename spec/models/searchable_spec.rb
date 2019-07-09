@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe NameSearch::Searchable do
   it 'should exist' do
-    defined?(NameSearch::Searchable).should be_true
+    expect(defined?(NameSearch::Searchable)).to eq 'constant'
   end
 
   specify 'table name should be name_search_searchables' do
-    NameSearch::Searchable.table_name.should == 'name_search_searchables'
+    expect(NameSearch::Searchable.table_name).to eq 'name_search_searchables'
   end
 
   let(:model) { Factory.build :name_searchable }

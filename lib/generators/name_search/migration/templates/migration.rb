@@ -10,7 +10,7 @@ class CreateNameSearchTables < ActiveRecord::Migration
       t.integer :nick_name_family_id
     end
     add_index :name_search_nick_name_family_joins, :name_id
-    add_index :name_search_nick_name_family_joins, :nick_name_family_id
+    add_index :name_search_nick_name_family_joins, :nick_name_family_id, name: 'index_name_search_nick_name_family_joins_on_nick_name_family'
      
     create_table :name_search_nick_name_families do |t|
     end
