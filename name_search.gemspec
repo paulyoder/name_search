@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/paulyoder/name_search'
 
   s.add_dependency 'rails', '>= 5.2.0'
-  s.add_dependency 'active_record', '>= 5.2.0'
 
   s.files   = Dir["lib/**/*"] + ['MIT-LICENSE', 'Rakefile', 'Gemfile', 'README.rdoc']
   s.version = NameSearch::VERSION
